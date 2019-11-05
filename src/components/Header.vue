@@ -115,7 +115,7 @@
       <a href="#" @click="show = true, dialogName='appSignin'">Đăng ký</a>
     </div>
     <component v-if="show" :is="dialogName" @closeModal="show = $event"></component>
-    <div class="row hidden-sm">
+    <div class="hidden-sm">
       <div class="col-12 search-phone">
         <form class="form-inline my-2 my-lg-0">
           <input
@@ -216,11 +216,11 @@ export default {
 
 .search {
   border-radius: 25px;
-  width: 310px;
+  width: 86%;
   position: relative;
   font-size: 14px;
   outline: none;
-  margin-left: 25px;
+  margin-left: 10px;
 }
 
 .search::placeholder {
