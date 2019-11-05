@@ -17,7 +17,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-5">
+        <ul class="navbar-nav mr-4">
           <router-link
             tag="li"
             class="nav-item"
@@ -71,31 +71,112 @@
           >
             <a class="nav-link text-white" href="#">Liên hệ</a>
           </router-link>
-          <li class="nav-item hidden-sm">
-            <a class="nav-link text-white" href="#">Đăng nhập</a>
-          </li>
-          <li class="nav-item hidden-sm">
+          <router-link
+            tag="li"
+            class="nav-item hidden-sm"
+            active-class="bg-info"
+            :to="{ name: 'dangky'}"
+          >
             <a class="nav-link text-white" href="#">Đăng ký</a>
-          </li>
+          </router-link>
+          <router-link
+            tag="li"
+            class="nav-item hidden-sm"
+            active-class="bg-info"
+            :to="{ name: 'dangnhap'}"
+          >
+            <a class="nav-link text-white" href="#">Đăng nhập</a>
+          </router-link>
         </ul>
+        <form class="form-inline my-2 my-lg-0 hidden">
+          <input
+            class="form-control mr-sm-2 search bg-secondary text-white"
+            type="search"
+            placeholder="Bạn cần tìm gì?"
+            v-model="searchSp"
+          />
+          <i class="fa fa-search text-white" aria-hidden="true"></i>
+          <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+        </form>
+        <div class="list-search hidden">
+          <ul class="list-group">
+            <!-- <li class="list-group-item bg-dark">abv</li> -->
+            <li
+              class="list-group-item bg-dark"
+              v-for="item in itemSearched"
+              v-bind:key="item"
+            >{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="login hidden">
+      <a href="#" @click="show = true, dialogName='appLogin'">Đăng nhập</a>
+      <a href="#" @click="show = true, dialogName='appSignin'">Đăng ký</a>
+    </div>
+    <component v-if="show" :is="dialogName" @closeModal="show = $event"></component>
+    <div class="row hidden-sm">
+      <div class="col-12 search-phone">
         <form class="form-inline my-2 my-lg-0">
           <input
             class="form-control mr-sm-2 search bg-secondary text-white"
             type="search"
             placeholder="Bạn cần tìm gì?"
+            v-model="searchSp"
           />
           <i class="fa fa-search text-white" aria-hidden="true"></i>
+          <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
         </form>
       </div>
-    </nav>
-    <div class="login hidden">
-      <router-link tag="a" :to="{name:'dangnhap'}">Đăng nhập</router-link>
-      <router-link tag="a" :to="{name:'dangky'}">Đăng ký</router-link>
+      <div class="col-12">
+        <ul class="list-group">
+          <!-- <li class="list-group-item bg-dark">abv</li> -->
+          <li
+            class="list-group-item bg-dark"
+            v-for="item in itemSearched"
+            v-bind:key="item"
+          >{{ item }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 <script>
-
+import Login from "./chidlen/modalLogin";
+import Signin from "./chidlen/modalSignin";
+export default {
+  data: function() {
+    return {
+      show: false,
+      dialogName: "appLogin",
+      typeSp: [
+        "Vest nam cao cấp",
+        "Sơ mi nam dài tay",
+        "Áo ba lỗ nam",
+        "Quần âu cao cấp",
+        "Quần đũi cao cấp",
+        "Đồ lót nam cao cấp",
+        "Phụ kiện thời trang"
+      ],
+      searchSp: ""
+    };
+  },
+  computed: {
+    itemSearched() {
+      if (this.searchSp.length == 0) {
+        return [];
+      } else {
+        return this.typeSp.filter(element => {
+          return element.toLowerCase().match(this.searchSp.toLowerCase());
+        });
+      }
+    }
+  },
+  components: {
+    appLogin: Login,
+    appSignin: Signin
+  }
+};
 </script>
 <style scoped>
 .header {
@@ -118,8 +199,8 @@
 }
 
 .logofashion {
-  width: 75px;
-  height: 75px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
 }
 
@@ -135,10 +216,11 @@
 
 .search {
   border-radius: 25px;
-  width: 330px;
+  width: 310px;
   position: relative;
   font-size: 14px;
   outline: none;
+  margin-left: 25px;
 }
 
 .search::placeholder {
@@ -147,7 +229,12 @@
 
 .fa-search {
   position: absolute;
-  right: 5%;
+  right: 16%;
+  bottom: 30%;
+}
+
+.search-phone {
+  padding: 0px;
 }
 
 .nav-link {
@@ -158,11 +245,27 @@
   display: none;
 }
 
+.list-search {
+  position: absolute;
+  top: 67%;
+  right: 6%;
+  width: 370px;
+  z-index: 10;
+}
 
-/* dialog modal*/
+.list-search li:hover {
+  cursor: pointer;
+  color: orange;
+}
+
+.fa-shopping-cart:hover {
+  cursor: pointer;
+  color: rgb(228, 228, 228);
+}
 @media screen and (min-width: 481px) {
   .search {
     width: 370px;
+    margin-left: 0px;
   }
   .hidden-sm {
     display: none;
@@ -170,6 +273,20 @@
 
   .hidden {
     display: block;
+  }
+
+  .logofashion {
+    width: 75px;
+    height: 75px;
+  }
+
+  .fa-search {
+    right: 7%;
+    bottom: 42%;
+  }
+
+  .fa-shopping-cart {
+    position: absolute;
   }
 }
 </style>
