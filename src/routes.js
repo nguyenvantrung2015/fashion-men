@@ -49,11 +49,9 @@ export const routes = [
     { path: '/dangnhap', name: "dangnhap", components: {
         default: DangNhap,
         'header': Header,
-        'footer': Footer
     } },
     { path: '/dangky', name: "dangky", components: {
         default: DangKy,
         'header': Header,
-        'footer': Footer
     } }
 ]

@@ -1,9 +1,9 @@
 <template>
   <div id="content" class="bg-white">
     <!-- setion1 -->
-    <section>
+    <section class="section1">
       <div class="row">
-        <div class="col-md-4 hidden">
+        <div class="col-md-4 col-12 list-sp">
           <ul class="list-group">
             <li class="list-group-item bg-dark">Vest nam cao cấp</li>
             <li class="list-group-item bg-dark">Sơ mi nam dài tay</li>
@@ -15,7 +15,7 @@
             <li class="list-group-item bg-dark">Phụ kiện thời trang</li>
           </ul>
         </div>
-        <div class="col-md-8 col-sm-12 banner-box">
+        <div class="col-md-8 col-sm-8 col-12 hidden banner-box">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
@@ -338,6 +338,10 @@
   display: none;
 }
 
+.list-sp {
+  padding: 0px;
+}
+
 .list-group-item {
   padding: 0.5rem 0.5rem;
 }
@@ -440,6 +444,12 @@
   .hidden {
     display: block;
   }
+
+  .list-sp {
+    padding-left: 0px;
+    padding-right: 15px;
+  }
+
   .banner-box {
     padding-left: 0px;
   }
